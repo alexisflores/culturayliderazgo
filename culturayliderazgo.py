@@ -32,13 +32,23 @@ data = {
     "Valor Actual": [8, 120, 75, 4, 50, 10],
     "Meta Objetivo": [10, 150, 80, 5, 100, 15]
 }
-
+st.markdown(
+    """
+    <style>
+    .title-container {
+        text-align: center;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
 # Crear DataFrame
 df = pd.DataFrame(data)
 
 # Título general
 st.title("Evolución Empresarial en la Era de la IA")
-st.header("Tablero de Control: Cultura y Liderazgo Digital")
+st.markdown('<div class="title-container"><h1>TTablero de Control: Cultura y Liderazgo Digital</h1></div>', unsafe_allow_html=True)
+// st.header("Tablero de Control: Cultura y Liderazgo Digital")
 
 # Filtrar datos por capacidad
 capacidades = df["Capacidad"].unique()
