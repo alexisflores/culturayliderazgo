@@ -1,8 +1,9 @@
 import streamlit as st
 import pandas as pd
+import numpy as np
 import matplotlib.pyplot as plt
 
-# Datos organizados por capacidades
+# Datos simulados organizados por capacidades
 data = {
     "Capacidad": ["Sensing", "Sensing", "Seizing", "Seizing", "Configuring", "Configuring"],
     "Meta": [
@@ -32,33 +33,22 @@ data = {
     "Valor Actual": [8, 120, 75, 4, 50, 10],
     "Meta Objetivo": [10, 150, 80, 5, 100, 15]
 }
+
+# Generar datos simulados de progreso mensual para cada meta
 def generate_progress_data(actual, target, months=10):
     progress = np.linspace(actual, target, months)
     return progress
 
-st.markdown(
-    """
-    <style>
-    .title-container {
-        text-align: center;
-    }
-    </style>
-    """,
-    unsafe_allow_html=True
-)
-
 # Crear DataFrame
 df = pd.DataFrame(data)
 
+# Generar datos mensuales para cada meta
 df["Progreso Mensual"] = df.apply(
     lambda row: generate_progress_data(row["Valor Actual"], row["Meta Objetivo"]), axis=1
 )
 
 # Título general
-#st.title("Evolución Empresarial en la Era de la IA")
-st.markdown('<div class="title-container"><h1>Evolución Empresarial en la Era de la IA</h1></div>', unsafe_allow_html=True)
-st.markdown('<div class="title-container"><h2>Tablero de Control: Cultura y Liderazgo Digital</h1></div>', unsafe_allow_html=True)
-# st.header("Tablero de Control: Cultura y Liderazgo Digital")
+st.title("Tablero de Control: Cultura y Liderazgo Digital")
 
 # Filtrar datos por capacidad
 capacidades = df["Capacidad"].unique()
@@ -72,31 +62,36 @@ for capacidad in capacidades:
     st.subheader(f"Resumen de Metas para {capacidad}")
     st.table(df_cap[["Meta", "OKR", "KPI", "Valor Actual", "Meta Objetivo"]])
     
-    # Gráficos por meta
+    # Gráficos por meta con datos temporales
     st.subheader(f"Gráficos por Meta - {capacidad}")
     for i, row in df_cap.iterrows():
         st.markdown(f"**Meta:** {row['Meta']}")
         st.markdown(f"- **OKR:** {row['OKR']}")
         st.markdown(f"- **KPI:** {row['KPI']}")
-
-        # Alternar tipos de gráficos
+        
+        # Selección de tipo de gráfico
         if i % 3 == 0:
-            # Gráfico de barras
+            # Gráfico de líneas para progreso mensual
             fig, ax = plt.subplots()
-            ax.bar(["Actual", "Meta"], [row["Valor Actual"], row["Meta Objetivo"]], color=["blue", "green"])
-            ax.set_title(f"Progreso de la Meta: {row['Meta']}")
-            ax.set_ylabel("Valores")
+            ax.plot(range(1, 11), row["Progreso Mensual"], marker='o', label="Progreso", color="blue")
+            ax.axhline(row["Meta Objetivo"], color="green", linestyle="--", label="Meta Objetivo")
+            ax.set_title(f"Evolución del Progreso: {row['Meta']}")
+            ax.set_xlabel("Mes")
+            ax.set_ylabel("Progreso")
+            ax.legend()
             st.pyplot(fig)
         elif i % 3 == 1:
-            # Gráfico de líneas
+            # Gráfico de barras acumulativas
             fig, ax = plt.subplots()
-            ax.plot(["Actual", "Meta"], [row["Valor Actual"], row["Meta Objetivo"]], marker='o', color="orange")
-            ax.set_title(f"Progreso de la Meta: {row['Meta']}")
-            ax.set_ylabel("Valores")
+            ax.bar(range(1, 11), row["Progreso Mensual"], color="orange", label="Progreso")
+            ax.axhline(row["Meta Objetivo"], color="green", linestyle="--", label="Meta Objetivo")
+            ax.set_title(f"Progreso Acumulativo: {row['Meta']}")
+            ax.set_xlabel("Mes")
+            ax.set_ylabel("Progreso")
+            ax.legend()
             st.pyplot(fig)
         else:
-            # Gráfico circular
-               # Gráfico de áreas apiladas
+            # Gráfico de áreas apiladas
             final_value = row["Progreso Mensual"][-1]
             remaining_value = row["Meta Objetivo"] - final_value
             fig, ax = plt.subplots()
@@ -112,13 +107,7 @@ for capacidad in capacidades:
             ax.set_ylabel("Valores")
             ax.legend(["Progreso", "Faltante"])
             st.pyplot(fig)
-        # Crear gráfico para la meta
-       # Crear gráfico para la meta
-        # fig, ax = plt.subplots()
-        #ax.bar(["Actual", "Meta"], [row["Valor Actual"], row["Meta Objetivo"]], color=["blue", "green"])
-        #ax.set_title(f"Progreso de la Meta: {row['Meta']}")
-        #ax.set_ylabel("Valores")
-        #st.pyplot(fig)
 
 # Instrucciones finales
-st.markdown("Este tablero permite visualizar el progreso de cada meta individualmente, junto con sus OKRs y KPIs.")
+st.markdown("Este tablero incluye gráficos con datos temporales que muestran la evolución del progreso para cada meta, usando líneas, barras acumulativas y áreas apiladas.")
+
