@@ -32,6 +32,10 @@ data = {
     "Valor Actual": [8, 120, 75, 4, 50, 10],
     "Meta Objetivo": [10, 150, 80, 5, 100, 15]
 }
+def generate_progress_data(actual, target, months=10):
+    progress = np.linspace(actual, target, months)
+    return progress
+
 st.markdown(
     """
     <style>
@@ -42,9 +46,7 @@ st.markdown(
     """,
     unsafe_allow_html=True
 )
-def generate_progress_data(actual, target, months=10):
-    progress = np.linspace(actual, target, months)
-    return progress
+
 # Crear DataFrame
 df = pd.DataFrame(data)
 df["Progreso Mensual"] = df.apply(
