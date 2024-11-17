@@ -65,7 +65,7 @@ for capacidad in capacidades:
     
     # Gráficos por meta
     st.subheader(f"Gráficos por Meta - {capacidad}")
-    for _, row in df_cap.iterrows():
+    for i, row in df_cap.iterrows():
         st.markdown(f"**Meta:** {row['Meta']}")
         st.markdown(f"- **OKR:** {row['OKR']}")
         st.markdown(f"- **KPI:** {row['KPI']}")
