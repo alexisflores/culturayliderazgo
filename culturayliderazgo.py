@@ -73,7 +73,7 @@ for capacidad in capacidades:
         if i % 3 == 0:
             # Gráfico de líneas para progreso mensual
             fig, ax = plt.subplots()
-            ax.plot(range(1, 1), row["Progreso Mensual"], marker='o', label="Progreso", color="blue")
+            ax.plot(range(1, 11), row["Progreso Mensual"], marker='o', label="Progreso", color="blue")
             ax.axhline(row["Meta Objetivo"], color="green", linestyle="--", label="Meta Objetivo")
             ax.set_title(f"Evolución del Progreso: {row['Meta']}")
             ax.set_xlabel("Mes")
