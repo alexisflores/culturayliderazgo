@@ -46,8 +46,9 @@ st.markdown(
 df = pd.DataFrame(data)
 
 # Título general
-st.title("Evolución Empresarial en la Era de la IA")
-st.markdown('<div class="title-container"><h1>TTablero de Control: Cultura y Liderazgo Digital</h1></div>', unsafe_allow_html=True)
+#st.title("Evolución Empresarial en la Era de la IA")
+st.markdown('<div class="title-container"><h1>Evolución Empresarial en la Era de la IA</h1></div>', unsafe_allow_html=True)
+st.markdown('<div class="title-container"><h2>Tablero de Control: Cultura y Liderazgo Digital</h1></div>', unsafe_allow_html=True)
 # st.header("Tablero de Control: Cultura y Liderazgo Digital")
 
 # Filtrar datos por capacidad
