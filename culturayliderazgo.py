@@ -47,29 +47,23 @@ for capacidad in capacidades:
     st.header(f"Capacidad: {capacidad}")
     df_cap = df[df["Capacidad"] == capacidad]
     
-    # Mostrar tabla con información de OKRs y KPIs
-    st.subheader(f"Resumen de Metas y Progresos para {capacidad}")
+    # Tabla con información de OKRs y KPIs
+    st.subheader(f"Resumen de Metas para {capacidad}")
     st.table(df_cap[["Meta", "OKR", "KPI", "Valor Actual", "Meta Objetivo"]])
     
-    # Gráfico de barras: OKR
-    st.subheader(f"Progreso de OKRs - {capacidad}")
-    fig_okr, ax_okr = plt.subplots()
-    ax_okr.bar(df_cap["Meta"], df_cap["Valor Actual"], label="Actual", color="blue")
-    ax_okr.bar(df_cap["Meta"], df_cap["Meta Objetivo"], label="Meta", alpha=0.5, color="green")
-    ax_okr.set_title(f"OKR Actual vs Meta Objetivo para {capacidad}")
-    ax_okr.set_ylabel("Valores")
-    ax_okr.tick_params(axis="x", rotation=45)
-    ax_okr.legend()
-    st.pyplot(fig_okr)
-    
-    # Gráficos individuales por KPI
-    st.subheader(f"Progreso de KPIs - {capacidad}")
+    # Gráficos por meta
+    st.subheader(f"Gráficos por Meta - {capacidad}")
     for _, row in df_cap.iterrows():
-        fig_kpi, ax_kpi = plt.subplots()
-        ax_kpi.bar(["Actual", "Meta"], [row["Valor Actual"], row["Meta Objetivo"]], color=["blue", "green"])
-        ax_kpi.set_title(f"KPI: {row['KPI']}")
-        ax_kpi.set_ylabel("Valores")
-        st.pyplot(fig_kpi)
+        st.markdown(f"**Meta:** {row['Meta']}")
+        st.markdown(f"- **OKR:** {row['OKR']}")
+        st.markdown(f"- **KPI:** {row['KPI']}")
+        
+        # Crear gráfico para la meta
+        fig, ax = plt.subplots()
+        ax.bar(["Actual", "Meta"], [row["Valor Actual"], row["Meta Objetivo"]], color=["blue", "green"])
+        ax.set_title(f"Progreso de la Meta: {row['Meta']}")
+        ax.set_ylabel("Valores")
+        st.pyplot(fig)
 
 # Instrucciones finales
-st.markdown("Este tablero permite monitorear el progreso de los OKRs y KPIs por capacidad, ayudando a evaluar el avance hacia los objetivos de transformación digital.")
+st.markdown("Este tablero permite visualizar el progreso de cada meta individualmente, junto con sus OKRs y KPIs.")
