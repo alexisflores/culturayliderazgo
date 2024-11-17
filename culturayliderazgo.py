@@ -42,6 +42,9 @@ st.markdown(
     """,
     unsafe_allow_html=True
 )
+def generate_progress_data(actual, target, months=10):
+    progress = np.linspace(actual, target, months)
+    return progress
 # Crear DataFrame
 df = pd.DataFrame(data)
 df["Progreso Mensual"] = df.apply(
