@@ -87,9 +87,21 @@ for capacidad in capacidades:
             st.pyplot(fig)
         else:
             # Gráfico circular
+               # Gráfico de áreas apiladas
+            final_value = row["Progreso Mensual"][-1]
+            remaining_value = row["Meta Objetivo"] - final_value
             fig, ax = plt.subplots()
-            ax.scatter([row["Valor Actual"], row["Meta Objetivo"]], labels=["Actual", "Meta"], autopct='%1.1f%%', colors=["blue", "green"])
-            ax.set_title(f"Progreso de la Meta: {row['Meta']}")
+            ax.fill_between(
+                ["Progreso", "Faltante"],
+                [final_value, 0],
+                [final_value, remaining_value],
+                color=["blue", "red"],
+                alpha=0.5,
+                label=["Progreso", "Faltante"]
+            )
+            ax.set_title(f"Progreso y Faltante: {row['Meta']}")
+            ax.set_ylabel("Valores")
+            ax.legend(["Progreso", "Faltante"])
             st.pyplot(fig)
         # Crear gráfico para la meta
        # Crear gráfico para la meta
