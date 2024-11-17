@@ -69,13 +69,35 @@ for capacidad in capacidades:
         st.markdown(f"**Meta:** {row['Meta']}")
         st.markdown(f"- **OKR:** {row['OKR']}")
         st.markdown(f"- **KPI:** {row['KPI']}")
-        
+
+        # Alternar tipos de gráficos
+        if i % 3 == 0:
+            # Gráfico de barras
+            fig, ax = plt.subplots()
+            ax.bar(["Actual", "Meta"], [row["Valor Actual"], row["Meta Objetivo"]], color=["blue", "green"])
+            ax.set_title(f"Progreso de la Meta: {row['Meta']}")
+            ax.set_ylabel("Valores")
+            st.pyplot(fig)
+        elif i % 3 == 1:
+            # Gráfico de líneas
+            fig, ax = plt.subplots()
+            ax.plot(["Actual", "Meta"], [row["Valor Actual"], row["Meta Objetivo"]], marker='o', color="orange")
+            ax.set_title(f"Progreso de la Meta: {row['Meta']}")
+            ax.set_ylabel("Valores")
+            st.pyplot(fig)
+        else:
+            # Gráfico circular
+            fig, ax = plt.subplots()
+            ax.pie([row["Valor Actual"], row["Meta Objetivo"]], labels=["Actual", "Meta"], autopct='%1.1f%%', colors=["blue", "green"])
+            ax.set_title(f"Progreso de la Meta: {row['Meta']}")
+            st.pyplot(fig)
         # Crear gráfico para la meta
-        fig, ax = plt.subplots()
-        ax.bar(["Actual", "Meta"], [row["Valor Actual"], row["Meta Objetivo"]], color=["blue", "green"])
-        ax.set_title(f"Progreso de la Meta: {row['Meta']}")
-        ax.set_ylabel("Valores")
-        st.pyplot(fig)
+       # Crear gráfico para la meta
+        # fig, ax = plt.subplots()
+        #ax.bar(["Actual", "Meta"], [row["Valor Actual"], row["Meta Objetivo"]], color=["blue", "green"])
+        #ax.set_title(f"Progreso de la Meta: {row['Meta']}")
+        #ax.set_ylabel("Valores")
+        #st.pyplot(fig)
 
 # Instrucciones finales
 st.markdown("Este tablero permite visualizar el progreso de cada meta individualmente, junto con sus OKRs y KPIs.")
