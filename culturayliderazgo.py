@@ -44,6 +44,9 @@ st.markdown(
 )
 # Crear DataFrame
 df = pd.DataFrame(data)
+df["Progreso Mensual"] = df.apply(
+    lambda row: generate_progress_data(row["Valor Actual"], row["Meta Objetivo"]), axis=1
+)
 
 # Título general
 #st.title("Evolución Empresarial en la Era de la IA")
