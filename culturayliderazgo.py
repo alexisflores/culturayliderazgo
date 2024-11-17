@@ -88,7 +88,7 @@ for capacidad in capacidades:
         else:
             # Gráfico circular
             fig, ax = plt.subplots()
-            ax.pie([row["Valor Actual"], row["Meta Objetivo"]], labels=["Actual", "Meta"], autopct='%1.1f%%', colors=["blue", "green"])
+            ax.scatter([row["Valor Actual"], row["Meta Objetivo"]], labels=["Actual", "Meta"], autopct='%1.1f%%', colors=["blue", "green"])
             ax.set_title(f"Progreso de la Meta: {row['Meta']}")
             st.pyplot(fig)
         # Crear gráfico para la meta
