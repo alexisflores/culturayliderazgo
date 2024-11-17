@@ -92,20 +92,12 @@ for capacidad in capacidades:
             st.pyplot(fig)
         else:
             # Gráfico de áreas apiladas
-            final_value = row["Progreso Mensual"][-1]
-            remaining_value = row["Meta Objetivo"] - final_value
+            actual = row["Valor Actual"]
+            remaining = row["Meta Objetivo"] - actual
             fig, ax = plt.subplots()
-            ax.fill_between(
-                ["Progreso", "Faltante"],
-                [final_value, 0],
-                [final_value, remaining_value],
-                color=["blue", "red"],
-                alpha=0.5,
-                label=["Progreso", "Faltante"]
-            )
+            ax.barh(["Progreso", "Faltante"], [actual, remaining], color=["blue", "red"])
             ax.set_title(f"Progreso y Faltante: {row['Meta']}")
-            ax.set_ylabel("Valores")
-            ax.legend(["Progreso", "Faltante"])
+            ax.set_xlabel("Valores")
             st.pyplot(fig)
 
 # Instrucciones finales
