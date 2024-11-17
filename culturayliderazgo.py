@@ -39,7 +39,7 @@ df = pd.DataFrame(data)
 # Título general
 st.title("Evolución Empresarial en la Era de la IA")
 st.title("Tablero de Control: Cultura y Liderazgo Digital")
-
+st.subheader("Ejemplo")
 # Filtrar datos por capacidad
 capacidades = df["Capacidad"].unique()
 
